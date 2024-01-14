@@ -3,8 +3,9 @@ const paginaSinLog = document.getElementById("paginaSinLog");
 const paginaConLog = document.getElementById("paginaConLog");
 const loginRegister = document.getElementById("loginRegister");
 
+let ciudadesSeleccionadas = []
 
-cargarPaginaSinLogin()
+// cargarPaginaSinLogin()
 
 function cargarPaginaSinLogin() {
   paginaSinLog.innerHTML += NavSinLog();
@@ -40,7 +41,7 @@ function cargarPaginaConLogin() {
 
   paginaConLog.innerHTML = Aside() + 
   `
-    <section id="tabs" class="col-xl-10 col-md-9 p-0 p-md-2">
+    <section id="tabs" class="col-xl-10 col-md-9 p-0 p-md-2 mb-0">
       <div id="mapa"></div>
       <div id="balizas"></div>
       <div id="datos-usuario"></div>

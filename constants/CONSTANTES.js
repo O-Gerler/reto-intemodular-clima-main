@@ -80,7 +80,7 @@ const INFORMACION_CARD_TIEMPO = [
   {
     nombre: 'Irun',
     temp: 22,
-    humendad: 22,
+    humedad: 22,
     temp_max: 22,
     temp_min: 22,
     viento: 22,
@@ -89,7 +89,7 @@ const INFORMACION_CARD_TIEMPO = [
   {
     nombre: 'Donostia',
     temp: 22,
-    humendad: 22,
+    humedad: 22,
     temp_max: 22,
     temp_min: 22,
     viento: 22,
@@ -98,10 +98,47 @@ const INFORMACION_CARD_TIEMPO = [
   {
     nombre: 'Renteria',
     temp: 22,
-    humendad: 22,
+    humedad: 22,
+    temp_max: 22,
+    temp_min: 22,
+    viento: 22,
+    precipitaciones: 22,
+  },
+  {
+    nombre: 'Renteria',
+    temp: 22,
+    humedad: 22,
     temp_max: 22,
     temp_min: 22,
     viento: 22,
     precipitaciones: 22,
   },
 ]
+
+const MEDIDAS = {
+  humedad: {
+    claseIcono: 'fa-droplet',
+    unidad: '%',
+    nombre: 'Humedad'
+  },
+  temp_max: {
+    claseIcono: 'fa-temperature-arrow-up',
+    unidad: 'ºC',
+    nombre: 'Maxima'
+  },
+  temp_min: {
+    claseIcono: 'fa-temperature-arrow-down',
+    unidad: 'ºC',
+    nombre: 'Minina'
+  },
+  viento: {
+    claseIcono: 'fa-wind',
+    unidad: ' Km/h',
+    nombre: 'Viento'
+  },
+  precipitacion: {
+    claseIcono: 'fa-umbrella"',
+    unidad: ' L/m<sup>2</sup>',
+    nombre: 'Precipitacion'
+  },
+}

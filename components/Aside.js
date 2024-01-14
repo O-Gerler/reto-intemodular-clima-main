@@ -52,35 +52,35 @@ const Aside = () => {
         <ul class="d-flex justify-content-evenly" >
           <li
             style="font-size: 2rem; border-radius: 50%"
-            class="mt-1 px-4 py-3 btn-mapa activo"
+            class="mt-1 p-2 px-sm-4 py-sm-3 btn-mapa activo"
             onclick="navegarMapa()"
           >
             <i class="fa-solid fa-map-location-dot"></i>
           </li>
           <li
             style="font-size: 2rem; border-radius: 50%"
-            class="mt-1 px-4 py-3 btn-balizas"
+            class="mt-1 p-2 px-3 px-sm-4 py-sm-3 btn-balizas"
             onclick="navegarBalizas()"
           >
             <i class="fa-solid fa-location-dot"></i>
           </li>
           <li
             style="font-size: 2rem; border-radius: 50%"
-            class="mt-1 px-4 py-3 btn-graficos"
+            class="mt-1 p-2 px-3 px-sm-4 py-sm-3 btn-graficos"
             onclick="navegarGraficos()"
           >
             <i class="fa-solid fa-chart-line"></i>
           </li>
           <li
             style="font-size: 2rem; border-radius: 50%"
-            class="mt-1 px-4 py-3 btn-perfil"
+            class="mt-1 p-2 px-3 px-sm-4 py-sm-3 btn-perfil"
             onclick="navegarPerfil()"
           >
             <i class="fa-solid fa-user"></i>
           </li>
           <li
-            style="font-size: 2rem; border-radius: 50%"
-            class="mt-1 p-3"
+            style="font-size: 2rem; border-radius: 50%;"
+            class="mt-1 p-2 px-sm-4 py-sm-3"
             onclick="navegarPerfil()"
           >
             <i class="fa-solid fa-right-from-bracket"></i>
@@ -107,12 +107,12 @@ const navegarMapa = () => {
   Mapa()
 }
 
-const navegarBalizas = () => {
+const navegarBalizas = async () => {
   limpiarPaginaConLog()
   borrarClaseActivo()
   const btnBalizas = document.querySelectorAll('.btn-balizas')
   btnBalizas.forEach( btn => btn.classList.add('activo') )
-  document.getElementById('balizas').innerHTML = Balizas()
+  document.getElementById('balizas').innerHTML = await Balizas()
 }
 
 const navegarGraficos = () => {
