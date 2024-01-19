@@ -113,6 +113,7 @@ const navegarBalizas = async () => {
   const btnBalizas = document.querySelectorAll('.btn-balizas')
   btnBalizas.forEach( btn => btn.classList.add('activo') )
   document.getElementById('balizas').innerHTML = await Balizas()
+  lucide.createIcons()
 }
 
 const navegarGraficos = () => {
@@ -120,7 +121,7 @@ const navegarGraficos = () => {
   borrarClaseActivo()
   const btnBalizas = document.querySelectorAll('.btn-graficos')
   btnBalizas.forEach( btn => btn.classList.add('activo') )
-  // Mapa()
+  document.getElementById('graficos').innerHTML = Graficos()
 }
 
 const navegarPerfil = () => {

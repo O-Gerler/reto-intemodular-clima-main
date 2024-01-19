@@ -4,6 +4,7 @@ const paginaConLog = document.getElementById("paginaConLog");
 const loginRegister = document.getElementById("loginRegister");
 
 let ciudadesSeleccionadas = []
+let modalSeleccionMedidasHTML = ''
 
 // cargarPaginaSinLogin()
 
@@ -33,6 +34,7 @@ function limpiarPaginaConLog() {
   ` 
     <div id="mapa"></div>
     <div id="balizas"></div>
+    <div id="graficos"></div>
     <div id="datos-usuario"></div>
   `
 }
@@ -44,11 +46,14 @@ function cargarPaginaConLogin() {
     <section id="tabs" class="col-xl-10 col-md-9 p-0 p-md-2 mb-0">
       <div id="mapa"></div>
       <div id="balizas"></div>
+      <div id="graficos"></div>
       <div id="datos-usuario"></div>
     </section>
   `
 
-  Mapa()
+  // Luego hay que hacer esto fijandose en el localStorage si existe algun registro mostrar directamente las balizas si no el mapa
+  // Mapa() 
+  navegarGraficos()
 }
 
 cargarPaginaConLogin()

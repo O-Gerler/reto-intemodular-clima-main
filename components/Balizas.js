@@ -19,15 +19,13 @@ const Balizas = async () => {
     cardsHTML += await CardTiempo(ciudad);
   }
 
-  let modalSeleccionMedidasHTML = ModalSeleccionMedidas()
-
   return (
     `
     <div 
+      id="contenedorCardsTiempo"
       class="w-100 d-flex justify-content-center justify-content-sm-start align-items-center flex-column flex-sm-row flex-wrap pt-4 position-relative pb-md-0"
       style="padding-bottom: 100px"
     >
-      ${modalSeleccionMedidasHTML}
       ${cardsHTML}
     </div>
     `

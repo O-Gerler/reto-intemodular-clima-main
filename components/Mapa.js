@@ -24,6 +24,8 @@ const Mapa = () => {
       offset: L.point(0, 0), // Desplazamiento del tooltip respecto al marcador
     });
 
+    // marcador._icon.classList.add(`marcador-${nombre.replaceAll(' ', '-')}`);
+
     marcador.addEventListener("click", () => {
       if (ciudadesSeleccionadas.find(ciudad => ciudad.nombre === nombre)) {
         Toast.fire({
@@ -31,8 +33,11 @@ const Mapa = () => {
           title: `${nombre} eliminado`
         })
         ciudadesSeleccionadas = ciudadesSeleccionadas.filter(ciudad => ciudad.nombre !== nombre)
+        // document.querySelector(`marcador-${nombre.replaceAll(' ', '-')}`).style.filter =  "hue-rotate(0deg)"
         return
       }
+
+      // document.querySelector(`marcador-${nombre.replaceAll(' ', '-')}`).style.filter =  "hue-rotate(120deg)"
 
       Toast.fire({
         icon: "success",
@@ -40,13 +45,15 @@ const Mapa = () => {
       })
 
       const medidasSeleccionadas = ['humedad', 'temp_max', 'temp_min', 'viento', 'precipitacion']
+      const medidasMostradas = ['Humedad', 'Maxima', 'Minima', 'Viento', 'Precipitacion']
 
 
       ciudadesSeleccionadas.push({
         nombre,
         codProvincia,
         codMunicipio,
-        medidasSeleccionadas
+        medidasSeleccionadas,
+        medidasMostradas
       })
     });
   });

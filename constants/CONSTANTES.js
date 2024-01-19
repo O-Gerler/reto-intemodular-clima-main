@@ -117,27 +117,27 @@ const INFORMACION_CARD_TIEMPO = [
 
 const MEDIDAS = {
   humedad: {
-    claseIcono: 'fa-droplet',
+    dataIcono: 'data-lucide="droplets"',
     unidad: '%',
     nombre: 'Humedad'
   },
   temp_max: {
-    claseIcono: 'fa-temperature-arrow-up',
+    dataIcono: 'data-lucide="thermometer-sun"',
     unidad: 'ºC',
     nombre: 'Maxima'
   },
   temp_min: {
-    claseIcono: 'fa-temperature-arrow-down',
+    dataIcono: 'data-lucide="thermometer-snowflake"',
     unidad: 'ºC',
-    nombre: 'Minina'
+    nombre: 'Minima'
   },
   viento: {
-    claseIcono: 'fa-wind',
+    dataIcono: 'data-lucide="wind"',
     unidad: ' Km/h',
     nombre: 'Viento'
   },
   precipitacion: {
-    claseIcono: 'fa-umbrella"',
+    dataIcono: 'data-lucide="umbrella"',
     unidad: ' L/m<sup>2</sup>',
     nombre: 'Precipitacion'
   },
