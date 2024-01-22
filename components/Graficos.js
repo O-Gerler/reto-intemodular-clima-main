@@ -1,6 +1,6 @@
 const Graficos = () => {
 
-  const btnAgregarGrafico = Boton('Agregar', '#0288d1', 'mostrarModalAgregarGraficos()', 'col-3')
+  const btnAgregarGrafico = Boton('Agregar', '#215AAC', 'mostrarModalAgregarGraficos()', 'col-3')
   
 
   return (

@@ -5,6 +5,7 @@ const loginRegister = document.getElementById("loginRegister");
 
 let ciudadesSeleccionadas = []
 let modalSeleccionMedidasHTML = ''
+const graficos = []
 
 // cargarPaginaSinLogin()
 

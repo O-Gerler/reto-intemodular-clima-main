@@ -25,14 +25,13 @@ const CardTiempo = async (ciudad) => {
     if (MEDIDAS[medida]) medidasHTML += Medida(MEDIDAS[medida], dato[medida], ciudad)
   })
 
-  console.log(ciudad)
   lucide.createIcons();
 
   return (
     `
       <div 
         class="mt-2 position-relative col-11 col-sm-6 col-xl-4 pb-3" 
-        style="border-radius: 20px; background: #94d7fc; border: 5px solid white;color: #215AAC"
+        style="border-radius: 10px; background: #94d7fc; border: 5px solid white;color: #215AAC"
       >
         <div>
           <h2 class="px-4 m-0" style="font-size: 6rem; font-weight: 900;font-family: 'Montserrat', sans-serif;">

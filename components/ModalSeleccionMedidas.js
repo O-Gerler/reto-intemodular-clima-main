@@ -1,6 +1,6 @@
 const ModalSeleccionMedidas = (ciudad) => {
 
-  const btnAceptar = Boton('Aceptar', '#0288d1', `filtrarMediciones('${ciudad}')`, 'col-6')
+  const btnAceptar = Boton('Aceptar', '#215AAC', `filtrarMediciones('${ciudad}')`, 'col-6')
   const btnCancelar = Boton('Cancelar', '#AAA', `borrarModalSeleccionMedidas()`, 'col-6')
 
   return (
@@ -13,13 +13,14 @@ const ModalSeleccionMedidas = (ciudad) => {
         <div 
           id="medidas"
           class="pb-1"
+          style="color: #215AAC"
         >
           
           <p
             id="zonaDrag"
-            class="d-flex justify-content-evenly align-items-center" 
+            class="d-flex justify-content-center gap-5 align-items-center" 
             style="font-size: 2.5rem; height: 60px"
-            ondrop="dejarIcono(event, this)"
+            ondrop="dejarIconoBase(event, this)"
             ondragover="permitirDrop(event)"
           >
             <span 
@@ -29,7 +30,7 @@ const ModalSeleccionMedidas = (ciudad) => {
               valor-nombre="Maxima"
               valor-codigo="temp_max"
             >
-              <i class="fa-solid fa-temperature-arrow-up"></i>
+              <i style="transform:scale(1.9)" data-lucide="thermometer-sun"></i>
             </span>
             <span 
               id="iconoMinima" 
@@ -38,7 +39,7 @@ const ModalSeleccionMedidas = (ciudad) => {
               valor-nombre="Minima"
               valor-codigo="temp_min"
             >
-              <i class="fa-solid fa-temperature-arrow-down"></i>
+              <i style="transform:scale(1.9)" data-lucide="thermometer-snowflake"></i>
             </span>
             <span 
               id="iconoViento" 
@@ -47,7 +48,7 @@ const ModalSeleccionMedidas = (ciudad) => {
               valor-nombre="Viento"
               valor-codigo="viento"
             >
-              <i class="fa-solid fa-wind"></i>
+              <i style="transform:scale(1.9)" data-lucide="wind"></i>
             </span>
             <span 
               id="iconoPrecipitacion" 
@@ -56,18 +57,19 @@ const ModalSeleccionMedidas = (ciudad) => {
               valor-nombre="Precipitacion"
               valor-codigo="precipitacion"
             >
-              <i class="fa-solid fa-umbrella"></i>
+              <i style="transform:scale(1.9)" data-lucide="umbrella"></i>
             </span>
             <h2
-            style="font-size:2.2rem; font-family: 'Montserrat', sans-serif;" 
-            class="text-center mb-2 fw-bold mt-4">Añade tus medidas</h2>
+            style="font-size:2.2rem; font-family: 'Montserrat', sans-serif; color: #333" 
+            class="text-center mb-2 fw-medium mt-4">Añade tus medidas</h2>
         </div>
         <div 
           id="seleccionadas"
           class="my-3 p-5"
-          style="border: 2px grey dotted"
-          ondragover="permitirDrop(event)"
-          ondragleaver="salirDrop(event)"
+          style="border: 2px grey dotted; color: #215AAC"
+          ondragover="cambiarColorDragOver(event)"
+          ondragleave="salirDrop(event)"
+          ondrop="dejarIconoZonaDrop(event, this)"
         > 
 
           <p
@@ -75,13 +77,12 @@ const ModalSeleccionMedidas = (ciudad) => {
             class="text-center mb-2 fw-ligth d-flex flex-column align-items-center justify-content-center gap-4"
           > 
             <i id="flecha" class="d-block" style="transform:scale(3)" data-lucide="arrow-down-circle"></i>
-            <span class="mt-2">Arrastra las medidas a este cuadro</span>
+            <span style="color:#333" class="mt-2">Arrastra las medidas a este cuadro</span>
           </p>
           <div 
             id="zonaDrop"
-            ondrop="dejarIcono(event, this)"
-            ondragover="permitirDrop(event)"
-            class="d-flex justify-content-evenly align-items-center"
+            ondragover="cambiarColorDragOver(event)"
+            class="d-flex justify-content-center gap-5 align-items-center"
             style="font-size: 2.5rem;"
           ></div>
         </div>
@@ -98,12 +99,24 @@ function moverIcono(event, elem) {
   event.dataTransfer.setData("text", elem.id);
 }
 
-function dejarIcono(event, elem) {
+function dejarIconoZonaDrop(event) {
+  const idIcono = event.dataTransfer.getData("text")
+  const zonaDrop = document.getElementById('zonaDrop')
+  $(`#${idIcono}`).appendTo(zonaDrop);
+  document.getElementById('seleccionadas').style.backgroundColor = '#cccccc67'
+}
+
+function dejarIconoBase(event, elem) {
   const idIcono = event.dataTransfer.getData("text")
   $(`#${idIcono}`).appendTo(elem);
+  document.getElementById('seleccionadas').style.backgroundColor = '#cccccc67'
 }
 
 function permitirDrop(event) {
+  event.preventDefault();
+}
+
+function cambiarColorDragOver(event) {
   event.preventDefault();
   document.getElementById('seleccionadas').style.backgroundColor = '#94d8fc67'
 }

@@ -24,7 +24,7 @@ const Mapa = () => {
       offset: L.point(0, 0), // Desplazamiento del tooltip respecto al marcador
     });
 
-    // marcador._icon.classList.add(`marcador-${nombre.replaceAll(' ', '-')}`);
+    marcador._icon.classList.add(`marcador-${nombre.replaceAll(' ', '-')}`);
 
     marcador.addEventListener("click", () => {
       if (ciudadesSeleccionadas.find(ciudad => ciudad.nombre === nombre)) {
@@ -33,11 +33,11 @@ const Mapa = () => {
           title: `${nombre} eliminado`
         })
         ciudadesSeleccionadas = ciudadesSeleccionadas.filter(ciudad => ciudad.nombre !== nombre)
-        // document.querySelector(`marcador-${nombre.replaceAll(' ', '-')}`).style.filter =  "hue-rotate(0deg)"
+        document.querySelector(`.marcador-${nombre.replaceAll(' ', '-')}`).style.filter =  "hue-rotate(0deg)"
         return
       }
 
-      // document.querySelector(`marcador-${nombre.replaceAll(' ', '-')}`).style.filter =  "hue-rotate(120deg)"
+      document.querySelector(`.marcador-${nombre.replaceAll(' ', '-')}`).style.filter =  "hue-rotate(120deg)"
 
       Toast.fire({
         icon: "success",
