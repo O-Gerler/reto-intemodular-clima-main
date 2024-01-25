@@ -9,6 +9,7 @@ const Graficos = () => {
         <div class="col-12 d-flex justify-content-end align-items-center">
           ${btnAgregarGrafico}
         </div>
+        <div id="contenedorGraficosCanvas"></div>
       </div>
     `
   )

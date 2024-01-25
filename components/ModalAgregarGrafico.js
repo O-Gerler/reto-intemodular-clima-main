@@ -99,21 +99,39 @@ function comprobarDatos() {
   }
 
   errorContainer.innerHTML = "";
-  
-  // Grafico(idCanvas, padre); borrar
-  
-  borrarModalAgregarGrafico();
-  
-  const padre = document.getElementById("contenedorGraficos");
 
-  graficos.push({
+  // Grafico(idCanvas, padre); borrar
+
+  borrarModalAgregarGrafico();
+
+  const padre = document.getElementById("contenedorGraficosCanvas");
+
+  padre.innerHTML = "";
+
+  // graficos.push({
+  //   municipio: municipioForm.value,
+  //   medicion: medicionesForm.value,
+  //   fechaInicio: fechaInicioForm.value,
+  //   fechaFin: fechaFinForm.value,
+  // });
+
+  const datos = {
     municipio: municipioForm.value,
     medicion: medicionesForm.value,
     fechaInicio: fechaInicioForm.value,
     fechaFin: fechaFinForm.value,
+  };
+
+  Grafico(datos, padre);
+  console.log("a");
+
+  graficos.forEach((grafico) => {
+    Grafico(datos, padre);
+    grafico.chart.render();
+    console.log("b");
   });
 
-  graficos.forEach(grafico => Grafico(grafico, padre));
+  graficos.push(datos);
 }
 
 function borrarModalAgregarGrafico() {
