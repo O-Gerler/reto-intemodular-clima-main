@@ -122,16 +122,18 @@ function comprobarDatos() {
     fechaFin: fechaFinForm.value,
   };
 
-  Grafico(datos, padre);
-  console.log("a");
+  graficos.push(datos);
 
   graficos.forEach((grafico) => {
-    Grafico(datos, padre);
-    grafico.chart.render();
-    console.log("b");
+    const datosGrafico = {
+      municipio: grafico.municipio,
+      medicion: grafico.medicion,
+      fechaInicio: grafico.fechaInicio,
+      fechaFin: grafico.fechaFin,
+    }
+    Grafico(datosGrafico, padre);
   });
 
-  graficos.push(datos);
 }
 
 function borrarModalAgregarGrafico() {

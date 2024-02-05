@@ -5,7 +5,7 @@ const Graficos = () => {
 
   return (
     `
-      <div id="contenedorGraficos" class="row">
+      <div id="contenedorGraficos" class="row" style="max-height: 100vh">
         <div class="col-12 d-flex justify-content-end align-items-center">
           ${btnAgregarGrafico}
         </div>

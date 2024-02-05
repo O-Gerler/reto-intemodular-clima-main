@@ -24,7 +24,13 @@ const Mapa = () => {
       offset: L.point(0, 0), // Desplazamiento del tooltip respecto al marcador
     });
 
-    marcador._icon.classList.add(`marcador-${nombre.replaceAll(' ', '-')}`);
+    const clase = `marcador-${nombre.replaceAll(' ', '-')}`
+
+    marcador._icon.classList.add(clase);
+
+    if (ciudadesSeleccionadas.find(ciudad => ciudad.clase === clase)) {
+      document.querySelector('.' + clase).style.filter =  "hue-rotate(120deg)"
+    }
 
     marcador.addEventListener("click", () => {
       if (ciudadesSeleccionadas.find(ciudad => ciudad.nombre === nombre)) {
@@ -33,11 +39,11 @@ const Mapa = () => {
           title: `${nombre} eliminado`
         })
         ciudadesSeleccionadas = ciudadesSeleccionadas.filter(ciudad => ciudad.nombre !== nombre)
-        document.querySelector(`.marcador-${nombre.replaceAll(' ', '-')}`).style.filter =  "hue-rotate(0deg)"
+        document.querySelector('.' + clase).style.filter =  "hue-rotate(0deg)"
         return
       }
 
-      document.querySelector(`.marcador-${nombre.replaceAll(' ', '-')}`).style.filter =  "hue-rotate(120deg)"
+      document.querySelector('.' + clase).style.filter =  "hue-rotate(120deg)"
 
       Toast.fire({
         icon: "success",
@@ -53,7 +59,8 @@ const Mapa = () => {
         codProvincia,
         codMunicipio,
         medidasSeleccionadas,
-        medidasMostradas
+        medidasMostradas,
+        clase
       })
     });
   });

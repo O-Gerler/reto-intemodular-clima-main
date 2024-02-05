@@ -1,15 +1,17 @@
 const Grafico = (ctx, contenedorPadre) => {
   const { municipio, medicion, fechaInicio, fechaFin } = ctx;
 
-  const canvasId = `${municipio}_${medicion}_${fechaInicio}_${fechaFin}`
+  const canvasId = `${municipio}_${medicion}_${fechaInicio}_${fechaFin}`;
 
-  // if (document.getElementById(canvasId) !== null) return false;
+  if (document.getElementById(canvasId) !== null) return false;
 
-  contenedorPadre.innerHTML += `<canvas id="${canvasId}"></canvas>`;
+  const canvasElement = document.createElement('canvas');
+  canvasElement.id = canvasId;
+  contenedorPadre.appendChild(canvasElement);
 
-  const canvas = document.getElementById(`${canvasId}`)
+  const canvasContext = canvasElement.getContext('2d');
 
-  const chart = new Chart(canvas, {
+  new Chart(canvasContext, {
     type: "bar",
     data: {
       labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -27,8 +29,7 @@ const Grafico = (ctx, contenedorPadre) => {
           beginAtZero: true,
         },
       },
+      responsive: true,
     },
   });
-
-  ctx['chart'] = chart
 };
