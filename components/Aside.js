@@ -32,17 +32,10 @@ const Aside = () => {
             <i class="fa-solid fa-chart-line"></i>
             <span class="p-2">Graficos</span>
           </li>
-          <li
-            style="font-size: 1.35rem; border-radius: 10px"
-            class="mt-1 px-3 py-2 btn-perfil"
-            onclick="navegarPerfil()"
-          >
-            <i class="fa-solid fa-user"></i>
-            <span class="p-2">Perfil</span>
-          </li>
         </ul>
         <p
           class="w-100 text-center py-3"
+          onclick="cerrarSesion()"
           style="border-top: 1px solid white; cursor: pointer; color: white"
         ><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</p>
       </aside>
@@ -72,16 +65,9 @@ const Aside = () => {
             <i class="fa-solid fa-chart-line"></i>
           </li>
           <li
-            style="font-size: 2rem; border-radius: 50%"
-            class="mt-1 p-2 px-3 px-sm-4 py-sm-3 btn-perfil"
-            onclick="navegarPerfil()"
-          >
-            <i class="fa-solid fa-user"></i>
-          </li>
-          <li
             style="font-size: 2rem; border-radius: 50%;"
             class="mt-1 p-2 px-sm-4 py-sm-3"
-            onclick="navegarPerfil()"
+            onclick="cerrarSesion()"
           >
             <i class="fa-solid fa-right-from-bracket"></i>
           </li>
@@ -100,6 +86,7 @@ const borrarClaseActivo = () => {
 }
 
 const navegarMapa = () => {
+  clearInterval(intervaloBalizas)
   limpiarPaginaConLog()
   borrarClaseActivo()
   const btnBalizas = document.querySelectorAll('.btn-mapa')
@@ -111,23 +98,65 @@ const navegarBalizas = async () => {
   limpiarPaginaConLog()
   borrarClaseActivo()
   const btnBalizas = document.querySelectorAll('.btn-balizas')
-  btnBalizas.forEach( btn => btn.classList.add('activo') )
+  btnBalizas.forEach( btn => btn.classList.add('activo'))
   document.getElementById('balizas').innerHTML = await Balizas()
   lucide.createIcons()
+  $( function() {
+    $( document ).tooltip();
+  } );
+  intervaloBalizas = setInterval(async () => {
+    document.getElementById('balizas').innerHTML = await Balizas()
+    lucide.createIcons()
+  }, 15000)
 }
 
 const navegarGraficos = () => {
+  clearInterval(intervaloBalizas)
   limpiarPaginaConLog()
   borrarClaseActivo()
   const btnBalizas = document.querySelectorAll('.btn-graficos')
   btnBalizas.forEach( btn => btn.classList.add('activo') )
   document.getElementById('graficos').innerHTML = Graficos()
+  if (graficos.length > 0) {
+    const padre = document.getElementById('contenedorGraficosCanvas')
+    graficos.forEach((grafico) => {
+      const datosGrafico = {
+        municipio: grafico.municipio,
+        medicion: grafico.medicion,
+        fechaInicio: grafico.fechaInicio,
+        fechaFin: grafico.fechaFin,
+      }
+      Grafico(datosGrafico, padre);
+    });
+  }
 }
 
 const navegarPerfil = () => {
+  clearInterval(intervaloBalizas)
   limpiarPaginaConLog()
   borrarClaseActivo()
   const btnBalizas = document.querySelectorAll('.btn-perfil')
   btnBalizas.forEach( btn => btn.classList.add('activo') )
   // Mapa()
+}
+
+const cerrarSesion = () => {
+  clearInterval(intervaloBalizas)
+  console.log('adios')
+  const apiUrl = `http://${urlActual}:8086/api/logout`
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json', 
+      'Authorization': `Bearer ${access_token}`,
+    },
+  }
+
+  fetch(apiUrl, options)
+    .then(res => res.json())
+    .then(data => {
+      borrarPaginaConLogin()
+      cargarPaginaSinLogin()
+      access_token = ''
+    })
 }

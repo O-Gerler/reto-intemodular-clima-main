@@ -10,12 +10,18 @@ const ModalAgregarGrafico = () => {
   let optionMunicipios = "";
   let optionMediciones = "";
 
-  BBDD_MUNICIPIOS.municipios.forEach(
-    (municio) => (optionMunicipios += Option(municio.NOMBRE_CAPITAL))
-  );
-  Object.values(MEDIDAS).forEach(
-    (medida) => (optionMediciones += Option(medida.nombre))
-  );
+  localizaciones.forEach(municipio => optionMunicipios += Option(municipio));
+
+  const medidas = [
+    {nombre: 'Temperatura', id: 'temp'},
+    {nombre: 'Maxima', id: 'temp_max'},
+    {nombre: 'Minima', id: 'temp_min'},
+    {nombre: 'Humedad', id: 'humedad'},
+    {nombre: 'Viento', id: 'viento'},
+    {nombre: 'Precipitacion', id: 'precipitacion'},
+  ]
+
+  medidas.forEach(medida => optionMediciones += Option(medida));
 
   return `
       <div
@@ -33,7 +39,7 @@ const ModalAgregarGrafico = () => {
         <form class="row">
           <div class="flex flex-column">
             <label class="form-label">Municipio</label>
-            <select id="municipioForm" class="form-select">
+            <select id="municipioForm" class="form-select text-capitalize">
               <option value=""> -- Seleccione Municipio -- </option>
               ${optionMunicipios}
             </select>
@@ -49,10 +55,6 @@ const ModalAgregarGrafico = () => {
             <label class="form-label">Fecha inicio</label>
             <input id="fechaInicioForm" class="form-control" type="date">
           </div>
-          <div class="flex flex-column">
-            <label class="form-label">Fecha fin</label>
-            <input id="fechaFinForm" class="form-control" type="date">
-          </div>
         </form>
         <div class="row px-2 mt-3" style="color:white; ">
           ${btnCancelar}
@@ -66,23 +68,19 @@ function comprobarDatos() {
   const municipioForm = document.getElementById("municipioForm");
   const medicionesForm = document.getElementById("medicionesForm");
   const fechaInicioForm = document.getElementById("fechaInicioForm");
-  const fechaFinForm = document.getElementById("fechaFinForm");
 
   const errorContainer = document.getElementById("errorContainer");
 
   if (
     municipioForm.value.trim() == "" ||
     medicionesForm.value.trim() == "" ||
-    fechaInicioForm.value.trim() == "" ||
-    fechaFinForm.value.trim() == ""
+    fechaInicioForm.value.trim() == "" 
   ) {
     errorContainer.innerHTML = Error("Rellene todos los campos");
     return;
   }
 
-  const existeMunicipio = BBDD_MUNICIPIOS.municipios.find(
-    (municio) => municio.NOMBRE_CAPITAL === municipioForm.value
-  );
+  const existeMunicipio = localizaciones.find(municipio => municipio.id == municipioForm.value);
 
   if (existeMunicipio == undefined) {
     errorContainer.innerHTML = Error("El municipio no existe");
@@ -91,16 +89,13 @@ function comprobarDatos() {
   }
 
   const fechaInicioFormDate = new Date(fechaInicioForm.value);
-  const fechaFinFormDate = new Date(fechaFinForm.value);
 
-  if (fechaFinFormDate > new Date() || fechaInicioFormDate > fechaFinFormDate) {
+  if (fechaInicioFormDate > new Date()) {
     errorContainer.innerHTML = Error("Fecha incorrecta");
     return;
   }
 
   errorContainer.innerHTML = "";
-
-  // Grafico(idCanvas, padre); borrar
 
   borrarModalAgregarGrafico();
 
@@ -108,18 +103,10 @@ function comprobarDatos() {
 
   padre.innerHTML = "";
 
-  // graficos.push({
-  //   municipio: municipioForm.value,
-  //   medicion: medicionesForm.value,
-  //   fechaInicio: fechaInicioForm.value,
-  //   fechaFin: fechaFinForm.value,
-  // });
-
   const datos = {
     municipio: municipioForm.value,
     medicion: medicionesForm.value,
     fechaInicio: fechaInicioForm.value,
-    fechaFin: fechaFinForm.value,
   };
 
   graficos.push(datos);

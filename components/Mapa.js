@@ -9,14 +9,16 @@ const Mapa = () => {
     attribution: "© OpenStreetMap contributors",
   }).addTo(map);
 
-  BBDD_MUNICIPIOS.municipios.forEach((muncipio) => {
+  localizaciones.forEach((muncipio) => {
     const {
-      LONGITUD_ETRS89_REGCAN95: longitud,
-      LATITUD_ETRS89_REGCAN95: latitud,
-      NOMBRE_CAPITAL: nombre,
-      CODIGOINE: codMunicipio,
-      CODPROV: codProvincia
+      latitud,
+      longitud,
+      nombre,
+      id,
+      id_localizacion_euskalmet
     } = muncipio;
+
+    const {cod_zona, cod_region} = id_localizacion_euskalmet.id_zona_euskalmet[0]
     const marcador = L.marker([latitud, longitud]).addTo(map);
     marcador.bindTooltip(nombre, {
       permanent: false, // El tooltip no será permanente
@@ -29,7 +31,7 @@ const Mapa = () => {
     marcador._icon.classList.add(clase);
 
     if (ciudadesSeleccionadas.find(ciudad => ciudad.clase === clase)) {
-      document.querySelector('.' + clase).style.filter =  "hue-rotate(120deg)"
+      document.querySelector('.' + clase).style.filter = "hue-rotate(120deg)"
     }
 
     marcador.addEventListener("click", () => {
@@ -39,11 +41,12 @@ const Mapa = () => {
           title: `${nombre} eliminado`
         })
         ciudadesSeleccionadas = ciudadesSeleccionadas.filter(ciudad => ciudad.nombre !== nombre)
-        document.querySelector('.' + clase).style.filter =  "hue-rotate(0deg)"
+        document.querySelector('.' + clase).style.filter = "hue-rotate(0deg)"
+        localStorage.setItem('ciudadesSeleccionadasJSON', JSON.stringify(ciudadesSeleccionadas))
         return
       }
 
-      document.querySelector('.' + clase).style.filter =  "hue-rotate(120deg)"
+      document.querySelector('.' + clase).style.filter = "hue-rotate(120deg)"
 
       Toast.fire({
         icon: "success",
@@ -56,12 +59,15 @@ const Mapa = () => {
 
       ciudadesSeleccionadas.push({
         nombre,
-        codProvincia,
-        codMunicipio,
+        id,
         medidasSeleccionadas,
         medidasMostradas,
-        clase
+        clase,
+        cod_zona,
+        cod_region
       })
+
+      localStorage.setItem('ciudadesSeleccionadasJSON', JSON.stringify(ciudadesSeleccionadas))
     });
-  });
+  })
 };

@@ -3,11 +3,18 @@ const paginaSinLog = document.getElementById("paginaSinLog");
 const paginaConLog = document.getElementById("paginaConLog");
 const loginRegister = document.getElementById("loginRegister");
 
-let ciudadesSeleccionadas = []
+let ciudadesSeleccionadas = JSON.parse(localStorage.getItem('ciudadesSeleccionadasJSON')) || []
 let modalSeleccionMedidasHTML = ''
+let access_token
+let intervaloBalizas
+let localizaciones
 const graficos = []
 
-// cargarPaginaSinLogin()
+let urlActual = (new URL(window.location.origin)).hostname;
+
+console.log(urlActual)
+
+cargarPaginaSinLogin()
 
 function cargarPaginaSinLogin() {
   paginaSinLog.innerHTML += NavSinLog();
@@ -40,6 +47,10 @@ function limpiarPaginaConLog() {
   `
 }
 
+function borrarPaginaConLogin() {
+  paginaConLog.innerHTML = ''
+}
+
 function cargarPaginaConLogin() {
 
   paginaConLog.innerHTML = Aside() + 
@@ -53,11 +64,12 @@ function cargarPaginaConLogin() {
   `
 
   // Luego hay que hacer esto fijandose en el localStorage si existe algun registro mostrar directamente las balizas si no el mapa
-  // Mapa() 
-  navegarGraficos()
+  if (ciudadesSeleccionadas.length > 0) navegarBalizas()
+  else navegarMapa()
+  // navegarGraficos()
 }
 
-cargarPaginaConLogin()
+// cargarPaginaConLogin()
 
 // Esta funciona ira cuando el login sea valido, por ahora se queda aqui para pobrar cuando se terminen las pruebas quitar de aqui
 

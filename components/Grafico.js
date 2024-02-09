@@ -1,7 +1,7 @@
 const Grafico = (ctx, contenedorPadre) => {
-  const { municipio, medicion, fechaInicio, fechaFin } = ctx;
+  const { municipio, medicion, fechaInicio } = ctx;
 
-  const canvasId = `${municipio}_${medicion}_${fechaInicio}_${fechaFin}`;
+  const canvasId = `${municipio}_${medicion}_${fechaInicio}`;
 
   if (document.getElementById(canvasId) !== null) return false;
 
@@ -11,25 +11,70 @@ const Grafico = (ctx, contenedorPadre) => {
 
   const canvasContext = canvasElement.getContext('2d');
 
-  new Chart(canvasContext, {
-    type: "bar",
-    data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [
-        {
-          label: "# of Votes",
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1,
-        },
-      ],
+  let apiUrl
+
+  if(calcularDiferenciaFechas(fechaInicio) <= 1) apiUrl = `http://${urlActual}:8086/api/historico/${municipio}`
+  if(calcularDiferenciaFechas(fechaInicio) <= 4 && calcularDiferenciaFechas(fechaInicio) > 1) 
+    apiUrl = `http://${urlActual}:8086/api/historicoPorHoras/${municipio}/${fechaInicio}`
+  if(calcularDiferenciaFechas(fechaInicio) > 4) 
+    apiUrl = `http://${urlActual}:8086/api/historicoPorDias/${municipio}/${fechaInicio}`
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${access_token}`,
     },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
+  }
+
+  fetch(apiUrl, options)
+  .then(res => res.json())
+  .then(data => {
+      const arrayMediciones = []
+      const arrayMedicionesFechas = []
+
+      for (let objKey in data.registros) {
+        let objInterno = data.registros[objKey]
+        for (let objMedicion in objInterno) {
+          if(objMedicion == medicion) {
+            arrayMediciones.push(objInterno[objMedicion])
+            arrayMedicionesFechas.push(`${objInterno['fecha']}_${objInterno['hora']}`)
+          }
+        }
+      }
+
+      new Chart(canvasContext, {
+        type: "line",
+        data: {
+          labels: arrayMedicionesFechas,
+          datasets: [
+            {
+              label: medicion,
+              data: arrayMediciones,
+              borderWidth: 1,
+            },
+          ],
         },
-      },
-      responsive: true,
-    },
-  });
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+          responsive: true,
+        },
+      });
+    });
 };
+
+function calcularDiferenciaFechas(fechaInicioString) {
+  const fechaInicio = new Date(fechaInicioString)
+  const fechaFinal = new Date()
+
+  let diferenciaEnMilisegundos = fechaFinal - fechaInicio;
+  let diasDeDiferencia = diferenciaEnMilisegundos / (1000 * 60 * 60 * 24);
+
+  diasDeDiferencia = Math.round(diasDeDiferencia);
+
+  return diasDeDiferencia
+}

@@ -1,5 +1,5 @@
 const Option = (municipio) => {
   return (
-    `<option value="${municipio}"> ${municipio} </option>`
+    `<option value="${municipio.id}"> ${municipio.nombre} </option>`
   )
 }

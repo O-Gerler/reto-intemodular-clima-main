@@ -21,7 +21,7 @@ const Medida = (dato, valor, ciudad) => {
         <div class="d-flex flex-column justify-content-center align-items-start"
           style="font-family: 'rubik'"
         >
-          <span style="font-size: 1.5rem; color: #183053"> ${valor}${unidad} </span>
+          <span style="font-size: 1.5rem; color: #183053"> ${parseFloat(valor).toFixed(2)}${unidad} </span>
           <span style="font-size: .8rem; color: #183053; margin-top: -5px">${nombre}</span>
         </div>
       </div>
